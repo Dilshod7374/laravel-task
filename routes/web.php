@@ -21,6 +21,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/dashboard',[MainController::class,'dashboard'])->name('dashboard');
 
     Route::resource('applications',ApplicationController::class);
+
+    Route::post('application/{application}/answer', [ApplicationController::class, 'answer']);
+
 });
 
 
@@ -33,7 +36,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 
 require __DIR__.'/auth.php';
