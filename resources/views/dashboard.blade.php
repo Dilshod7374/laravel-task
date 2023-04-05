@@ -62,12 +62,22 @@
                                                     <span class="text-neutral-600">No file</span>
                                                 @endif
                                             </div>
-                                            <div>
-                                                <a href="#"
-                                                    class="p-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                                    Answer
-                                                </a>
-                                            </div>
+                                            @if (!$application->answer()->exists())
+                                                <div>
+                                                    <a href="{{ route('answers.create', ['application' => $application->id]) }}"
+                                                        class="p-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                        Answer
+                                                    </a>
+                                                </div>
+                                            @else
+                                            <br><br>
+                                                <div
+                                                    class="text-neutral-600 m-6 mr-8 p-4 border rounded hover:bg-gray-50 transition cursor-pointer flex flex-col items-right">
+                                                    <hr>
+                                                    <h3>Answer : </h3>
+                                                    <p>{{ $application->answer->body }}</p>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

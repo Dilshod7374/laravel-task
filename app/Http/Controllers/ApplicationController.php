@@ -14,6 +14,10 @@ use Illuminate\Validation\Validator;
 
 class ApplicationController extends Controller
 {
+    public function index()
+    {
+        return view('applications.index', ['applications'=>auth()->user()->applications]);
+    }
     public function store(StoreApplicationRequest $request)
     {
 
@@ -39,13 +43,14 @@ class ApplicationController extends Controller
 
         return redirect()->back();
     }
-
     protected function checkDate()
     {
+
         $last_application = auth()->user()->applications()->latest()->first();
+        if(!isset($last_application->created_at))
+        { return false; }
         $last_app_date = Carbon::parse($last_application->created_at)->format('Y-m-d');
         $today = Carbon::now()->format('Y-m-d');
-
         if($last_app_date == $today)
         {
             return true;
