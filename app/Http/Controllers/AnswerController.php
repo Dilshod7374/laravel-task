@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Gate;
 
 class AnswerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:manager');
+    }
     public function create(Application $application)
     {
         if (! Gate::allows('answer-application', auth()->user())) {
@@ -21,7 +25,7 @@ class AnswerController extends Controller
         if (! Gate::allows('answer-application', auth()->user())) {
             abort(403);
         }
-        
+
         $request->validate(['body'=>'required']);
 
         $application->answer()->create([
